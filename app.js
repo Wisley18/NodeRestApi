@@ -3,6 +3,9 @@ const express = require('express');
 
 const app = express();
 
+const upload = require('express-fileupload');
+
+
 //Logs
 const morgan = require('morgan');
 
@@ -12,6 +15,10 @@ const bodyParser = require('body-parser');
 //RoutePrefix 
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const uploadVideo = require('./api/routes/upload');
+
+app.use(upload())
+
 
 app.use(morgan('dev'));
 
@@ -30,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/upload', uploadVideo);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
