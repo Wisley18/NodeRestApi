@@ -1,24 +1,19 @@
 //Framework web
 const express = require('express');
-
 const app = express();
-
-const upload = require('express-fileupload');
-
-
+//MongoDB
+const mongoose = require('mongoose');
 //Logs
 const morgan = require('morgan');
-
 //Parse body json
 const bodyParser = require('body-parser');
-
 //RoutePrefix 
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
-const uploadVideo = require('./api/routes/upload');
 
-app.use(upload())
 
+//Conexão com o MongoDB Atlas(MongoDB em Cloud)
+mongoose.connect('mongodb+srv://wisley:' + process.env.MONGO_ATLAS_PW + '@test-node-x3mrr.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 app.use(morgan('dev'));
 
@@ -37,7 +32,6 @@ app.use((req, res, next) => {
 
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
-app.use('/upload', uploadVideo);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
