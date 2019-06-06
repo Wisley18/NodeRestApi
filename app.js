@@ -16,7 +16,7 @@ const ordersRoutes = require('./api/routes/orders');
 mongoose.connect('mongodb+srv://wisley:' + process.env.MONGO_ATLAS_PW + '@test-node-x3mrr.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 app.use(morgan('dev'));
-
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
