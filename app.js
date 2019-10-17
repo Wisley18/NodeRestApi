@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 //RoutePrefix 
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const usersRoutes = require('./api/routes/users');
 
 
 //Conexão com o MongoDB Atlas(MongoDB em Cloud)
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
