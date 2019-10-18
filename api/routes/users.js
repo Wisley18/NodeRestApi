@@ -1,9 +1,11 @@
+//Import das dependências
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+//Importa a classe modelo
 const User = require('../models/user');
 
 router.post('/signup', (req, res, next) => {
@@ -17,6 +19,7 @@ router.post('/signup', (req, res, next) => {
                 message: 'Mail exists'
             });    
           } else {
+            //Criptografa a senha  
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 if(err) {
                     return res.status(500).json({
@@ -58,6 +61,7 @@ router.post('/login', (req, res, next) => {
                 });
             }
 
+            //Compara a senha criptografada do banco com a senha enviada
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if (err) {
                     return res.status(401).json({
@@ -66,6 +70,8 @@ router.post('/login', (req, res, next) => {
                 }
 
                 if (result) {
+
+                    //Implementa o token com o padrão JWT
                     const token = jwt.sign(
                         {
                             email: user.email,
